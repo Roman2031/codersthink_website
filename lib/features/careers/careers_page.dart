@@ -11,13 +11,16 @@ import 'widgets/job_card.dart';
 class CareersPage extends StatelessWidget {
   const CareersPage({super.key});
 
+
+
   static const _perks = [
-    {'icon': '🏠', 'title': 'Remote Friendly', 'desc': 'Work from anywhere in Bangladesh'},
-    {'icon': '📈', 'title': 'Growth Paths', 'desc': 'Clear career progression plans'},
-    {'icon': '💰', 'title': 'Competitive Pay', 'desc': 'Market-leading compensation packages'},
-    {'icon': '🎓', 'title': 'Learning Budget', 'desc': 'Annual education & conference allowance'},
-    {'icon': '🏥', 'title': 'Health Coverage', 'desc': 'Full medical insurance for you & family'},
-    {'icon': '🎉', 'title': 'Team Events', 'desc': 'Regular team retreats and celebrations'},
+    // Add post for job circulers
+    // {'icon': '🏠', 'title': 'Remote Friendly', 'desc': 'Work from anywhere in Bangladesh'},
+    // {'icon': '📈', 'title': 'Growth Paths', 'desc': 'Clear career progression plans'},
+    // {'icon': '💰', 'title': 'Competitive Pay', 'desc': 'Market-leading compensation packages'},
+    // {'icon': '🎓', 'title': 'Learning Budget', 'desc': 'Annual education & conference allowance'},
+    // {'icon': '🏥', 'title': 'Health Coverage', 'desc': 'Full medical insurance for you & family'},
+    // {'icon': '🎉', 'title': 'Team Events', 'desc': 'Regular team retreats and celebrations'},
   ];
 
   @override

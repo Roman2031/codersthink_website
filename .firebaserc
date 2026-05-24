@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "codersthink-web"
-  }
+    "default": "codersthink-web",
+    "codersthinkwebsite": "codersthinkwebite"
+  },
+  "targets": {},
+  "etags": {}
 }

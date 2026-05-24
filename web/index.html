@@ -31,9 +31,114 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background-color: #0A0A0F; overflow: hidden; }
+    #loading {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #0A0A0F; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    #loading.hidden { opacity: 0; pointer-events: none; }
+    .loader-logo-img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 28px;
+      animation: pulse 2s infinite;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+    .loader-brand {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 22px; font-weight: 700; color: white;
+      letter-spacing: -0.5px; margin-bottom: 8px;
+    }
+    .loader-text {
+      color: rgba(255,255,255,0.4); font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px;
+    }
+    .loader-bar-container {
+      width: 240px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .loader-bar {
+      width: 100%; height: 4px; background: rgba(255,255,255,0.08);
+      border-radius: 4px; overflow: hidden; margin-bottom: 12px;
+    }
+    .loader-bar-fill {
+      height: 100%; width: 0%; background: linear-gradient(90deg, #6C63FF, #00D4FF);
+      transition: width 0.2s ease;
+    }
+    #loading-percentage {
+      color: rgba(255,255,255,0.8);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(108,99,255,0.2); }
+      50% { transform: scale(1.04); box-shadow: 0 0 0 20px rgba(108,99,255,0); }
+    }
   </style>
 </head>
 <body>
+  <div id="loading">
+    <img src="assets/assets/images/company_logo.png" class="loader-logo-img" alt="Company Logo" onerror="this.src='favicon.png'; this.onerror=null;" />
+    <div class="loader-brand">CodersThink</div>
+    <div class="loader-text">Software Ltd.</div>
+    <div class="loader-bar-container">
+      <div class="loader-bar"><div class="loader-bar-fill" id="bar-fill"></div></div>
+      <div id="loading-percentage">0%</div>
+    </div>
+  </div>
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    function getCookie(name) {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      if (match) return match[2];
+      return null;
+    }
+
+    const isFirstTime = !getCookie("has_visited");
+    let progress = 0;
+    const percentText = document.getElementById('loading-percentage');
+    const barFill = document.getElementById('bar-fill');
+    let interval;
+
+    if (isFirstTime) {
+      interval = setInterval(() => {
+        progress += Math.random() * 8;
+        if (progress > 95) progress = 95;
+        percentText.innerText = Math.floor(progress) + '%';
+        barFill.style.width = progress + '%';
+      }, 150);
+    } else {
+      progress = 85;
+      percentText.innerText = 'Fast Loading...';
+      barFill.style.width = progress + '%';
+      interval = setInterval(() => {
+        progress += 1;
+        if (progress > 98) progress = 98;
+        barFill.style.width = progress + '%';
+      }, 50);
+    }
+
+    window.addEventListener('flutter-first-frame', function() {
+      if (isFirstTime) {
+        document.cookie = "has_visited=true; max-age=31536000; path=/";
+      }
+      clearInterval(interval);
+      percentText.innerText = '100%';
+      barFill.style.width = '100%';
+      
+      // Wait for 800ms so the user can clearly see it reached 100% before fading out
+      setTimeout(() => {
+        const loader = document.getElementById('loading');
+        if (loader) { 
+          loader.classList.add('hidden'); 
+          setTimeout(() => loader.remove(), 500); 
+        }
+      }, 800);
+    });
+  </script>
 </body>
 </html>
